@@ -155,20 +155,212 @@
             display: block;
         }
 
-        /* QR Code */
-        .qr-code {
-            text-align: center;
-            margin-top: 20px;
+        /* Gift Box */
+        .gift-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 25px;
+            perspective: 500px;
         }
 
-        .qr-code img {
-            width: 200px;
-            height: 200px;
-            object-fit: contain;
-            border: 3px solid #ffb6c1;
-            border-radius: 10px;
-            padding: 5px;
-            background: white;
+        .gift-box {
+            position: relative;
+            width: 120px;
+            height: 100px;
+            cursor: pointer;
+            transform-style: preserve-3d;
+            transition: transform 0.3s ease;
+        }
+
+        .gift-box:hover {
+            transform: scale(1.05);
+        }
+
+        .gift-box.shaking {
+            animation: shake 0.5s ease-in-out infinite;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0) rotate(0deg); }
+            25% { transform: translateX(-5px) rotate(-3deg); }
+            75% { transform: translateX(5px) rotate(3deg); }
+        }
+
+        /* ตัวกล่อง */
+        .box-body {
+            position: absolute;
+            bottom: 0;
+            width: 120px;
+            height: 80px;
+            background: linear-gradient(180deg, #fff 0%, #f8f5f5 100%);
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+        }
+
+        /* ริบบิ้นแนวตั้ง */
+        .ribbon-vertical {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 100%;
+            background: linear-gradient(90deg, #f5c6c6 0%, #ffb6c1 50%, #f5c6c6 100%);
+        }
+
+        /* ริบบิ้นแนวนอน */
+        .ribbon-horizontal {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100%;
+            height: 20px;
+            background: linear-gradient(180deg, #f5c6c6 0%, #ffb6c1 50%, #f5c6c6 100%);
+        }
+
+        /* ฝากล่อง */
+        .box-lid {
+            position: absolute;
+            top: 0;
+            left: -5px;
+            width: 130px;
+            height: 25px;
+            background: linear-gradient(180deg, #fff 0%, #f0f0f0 100%);
+            border-radius: 5px;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            transform-origin: bottom center;
+            transition: transform 0.6s ease, opacity 0.3s ease 0.5s;
+            z-index: 2;
+        }
+
+        .box-lid .ribbon-horizontal {
+            top: 50%;
+            height: 20px;
+        }
+
+        .gift-box.opened .box-lid {
+            transform: rotateX(-120deg) translateY(-80px);
+            opacity: 0;
+        }
+
+        /* โบว์ */
+        .bow {
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 3;
+        }
+
+        .bow-center {
+            width: 20px;
+            height: 18px;
+            background: radial-gradient(ellipse, #ffb6c1 60%, #f5a0a0 100%);
+            border-radius: 50%;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+        }
+
+        .bow-left, .bow-right {
+            position: absolute;
+            top: 5px;
+            width: 30px;
+            height: 25px;
+            background: linear-gradient(135deg, #ffccd5 0%, #ffb6c1 50%, #f5a0a0 100%);
+            border-radius: 50% 50% 50% 50%;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .bow-left {
+            left: -25px;
+            transform: rotate(-30deg);
+        }
+
+        .bow-right {
+            right: -25px;
+            transform: rotate(30deg);
+        }
+
+        .bow-tail-left, .bow-tail-right {
+            position: absolute;
+            top: 18px;
+            width: 12px;
+            height: 35px;
+            background: linear-gradient(180deg, #ffb6c1 0%, #f5a0a0 100%);
+            border-radius: 0 0 5px 5px;
+        }
+
+        .bow-tail-left {
+            left: -8px;
+            transform: rotate(15deg);
+        }
+
+        .bow-tail-right {
+            right: -8px;
+            transform: rotate(-15deg);
+        }
+
+        /* หัวใจเด้งออกจากกล่อง */
+        .box-heart {
+            position: absolute;
+            font-size: 20px;
+            pointer-events: none;
+            animation: heart-pop 1s ease-out forwards;
+            z-index: 10;
+        }
+
+        @keyframes heart-pop {
+            0% {
+                transform: translateY(0) scale(0.5);
+                opacity: 1;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-80px) scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        /* ข้อความในกล่อง */
+        .gift-content {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.3s ease 0.3s;
+            z-index: 1;
+        }
+
+        .gift-box.opened .gift-content {
+            opacity: 1;
+        }
+
+        .gift-content a {
+            display: inline-block;
+            padding: 8px 15px;
+            background: linear-gradient(135deg, #ff6b95 0%, #ff91a4 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            box-shadow: 0 3px 10px rgba(255,107,149,0.4);
+            animation: pulse 1.5s ease infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .gift-hint {
+            margin-top: 10px;
+            font-size: 0.8rem;
+            color: #d63384;
         }
 
         /* หัวข้อ */
@@ -434,11 +626,29 @@
                     </p>
                 </div>
 
-                <!-- QR Code แทนหัวใจ -->
-                <div class="qr-code">
-                    <img src="images/QRcode1.png" alt="QR Code">
+                <!-- กล่องของขวัญ -->
+                <div class="gift-container">
+                    <div class="gift-box" id="giftBox">
+                        <!-- ฝากล่อง -->
+                        <div class="box-lid">
+                            <div class="ribbon-horizontal"></div>
+                            <!-- โบว์ -->
+                            <div class="bow">
+                                <div class="bow-left"></div>
+                                <div class="bow-right"></div>
+                                <div class="bow-center"></div>
+                                <div class="bow-tail-left"></div>
+                                <div class="bow-tail-right"></div>
+                            </div>
+                        </div>
+                        <!-- ตัวกล่อง -->
+                        <div class="box-body">
+                            <div class="ribbon-vertical"></div>
+                            <div class="ribbon-horizontal"></div>
+                        </div>
+                    </div>
                 </div>
-
+               
                 <!-- หมีน่ารัก -->
                 <div class="bears">
                     <span class="bear-right">🧸</span>
@@ -492,6 +702,94 @@
                 container.appendChild(heart);
             }
         }
+
+        // Gift Box Interaction
+        const giftBox = document.getElementById('giftBox');
+        let isOpened = false;
+        let heartInterval = null;
+
+        // สร้างหัวใจเด้งออกจากกล่อง
+        function createBoxHeart() {
+            const hearts = ['❤️', '💕', '💖', '💗', '💓', '🩷'];
+            const heart = document.createElement('div');
+            heart.className = 'box-heart';
+            heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+            
+            // ตำแหน่งสุ่มบริเวณกล่อง
+            const randomX = Math.random() * 100 - 50;
+            heart.style.left = `calc(50% + ${randomX}px)`;
+            heart.style.top = '20px';
+            heart.style.fontSize = (Math.random() * 10 + 15) + 'px';
+            
+            giftBox.appendChild(heart);
+            
+            // ลบหัวใจหลังจาก animation จบ
+            setTimeout(() => heart.remove(), 1000);
+        }
+
+        // เอาเมาส์ชี้แล้วสั่น + หัวใจเด้ง
+        giftBox.addEventListener('mouseenter', function() {
+            if (!isOpened) {
+                giftBox.classList.add('shaking');
+                createBoxHeart();
+                heartInterval = setInterval(createBoxHeart, 300);
+            }
+        });
+
+        giftBox.addEventListener('mouseleave', function() {
+            giftBox.classList.remove('shaking');
+            if (heartInterval) {
+                clearInterval(heartInterval);
+                heartInterval = null;
+            }
+        });
+
+        // สำหรับมือถือ - แตะค้างแล้วสั่น + หัวใจเด้ง
+        giftBox.addEventListener('touchstart', function() {
+            if (!isOpened) {
+                giftBox.classList.add('shaking');
+                createBoxHeart();
+                heartInterval = setInterval(createBoxHeart, 300);
+            }
+        });
+
+        giftBox.addEventListener('touchend', function() {
+            giftBox.classList.remove('shaking');
+            if (heartInterval) {
+                clearInterval(heartInterval);
+                heartInterval = null;
+            }
+        });
+
+        // กดเพื่อเปิด/ปิดกล่อง
+        giftBox.addEventListener('click', function(e) {
+            // ถ้ากดที่ลิงก์ตอนเปิดแล้ว ให้ไปหน้าถัดไป
+            if (e.target.id === 'giftLink' && isOpened) {
+                return; // ให้ลิงก์ทำงานปกติ
+            }
+            
+            e.preventDefault();
+            
+            if (!isOpened) {
+                // เปิดกล่อง
+                isOpened = true;
+                giftBox.classList.add('opened');
+                giftBox.classList.remove('shaking');
+                
+                // รอให้ฝากล่องหายแล้วค่อยไปหน้าถัดไป
+                setTimeout(function() {
+                    window.location.href = 'https://rangsunboonpun-png.github.io/ForFreshFresh/';
+                }, 1000); // รอ 1 วินาที
+            }
+        });
+
+        // ป้องกันลิงก์ทำงานถ้ายังไม่เปิดกล่อง
+        const giftLink = document.getElementById('giftLink');
+        giftLink.addEventListener('click', function(e) {
+            if (!isOpened) {
+                e.preventDefault();
+            }
+        });
     </script>
 
 </body>

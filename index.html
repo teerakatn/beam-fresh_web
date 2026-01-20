@@ -118,7 +118,13 @@
         /* หัวใจเล็กบนกระดาษ */
         .letter-heart {
             font-size: 30px;
-            margin-bottom: 5px;
+            /* ให้อยู่ “บนเส้น” ที่วาดด้วย .letter::before (top: 30px) */
+            position: absolute;
+            top: 30px;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            margin: 0;
         }
 
         .letter-text {
